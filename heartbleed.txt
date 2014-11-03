@@ -1,0 +1,49 @@
+Tópicos para apresentação
+
+O que é OPENSSL?
+- Uma implementação open-source dos protocolos TLS/SSL
+- Biblioteca escrita em C, mas multi-plataforma
+- Permite comunicação criptografada entre máquinas
+
+Por que o OPENSSL é importante?
+- 2/3 de todos os servidores web utilizam OpenSSL
+- Facebook, Twitter, Google, Yahoo, Dropbox, Instagram...
+- biblioteca padrão de criptografia no Linux e BSD
+
+O que é o Heartbleed bug?
+- uma vulnerabilidade na troca de heartbeats (RFC6520)
+- afeta tanto cliente quanto servidor
+- não é um problema com a criptografia
+- apareceu em dezembro de 2011
+
+Por que eu deveria ter medo?
+- permite ler 64KB da máquina atacada
+- não é preciso ter acesso privilegiado
+- É possível roubar qualquer coisa (senhas, mensagens, certificados, endereços de e-mail...)
+- O roubo não deixa vestígios
+
+Mas não basta usar um patch...
+- É preciso revogar os certificados comprometidos
+- É preciso invalidar sessões, cookies e chaves
+- Basta que apenas um dos hosts esteja vulnerável
+
+Como funciona na prática
+-
+-
+-
+
+Versões afetadas e correção
+- OpenSSL 1.0.1 - 1.0.1f são versões vulneráveis
+- A correção só veio em abril de 2014 (+ de dois anos de exploit)
+- Para corrigir, compilar com -DOPENSSL_NO_HEARTBEATS
+- ou usar a partir da versão 1.0.1g
+
+O lado positivo do heartbleed
+- Perfect Forward Secrecy é importante
+- Cibercriminosos também ficaram vulneráveis
+
+
+--> O bug se encontra em:
+     arquivo: ssl/d1_both.c,
+     função: dtls1_process_heartbeat(SSL *s) (linha: 1448)
+     problema: linha 1480
