@@ -28,22 +28,29 @@ Mas não basta usar um patch...
 - Basta que apenas um dos hosts esteja vulnerável
 
 Como funciona na prática
--
--
--
+- o bug se encontra na implementação do heartbeat do OpenSSL
+- o heartbeat é usado para evitar a renegociação entre peers
+- linha problemática: buf = OPENSSL_malloc(1 + 2 + payload + padding);
+- permite que o usuário aloque uma quantidade arbitrária de memória para um heartbeat
+- a memória não é checada pelo destino e o um pacote de até 64KB é devolvido com memória coletada do servidor
+- na memória lida do servidor pode haver qualquer tipo de dado sensível
 
 Versões afetadas e correção
 - OpenSSL 1.0.1 - 1.0.1f são versões vulneráveis
 - A correção só veio em abril de 2014 (+ de dois anos de exploit)
 - Para corrigir, compilar com -DOPENSSL_NO_HEARTBEATS
-- ou usar a partir da versão 1.0.1g
+- ou ainda melhor: usar a partir da versão 1.0.1g
 
 O lado positivo do heartbleed
 - Perfect Forward Secrecy é importante
 - Cibercriminosos também ficaram vulneráveis
+- Conseguir as chaves é improvável devido à heap allocation (uso de buracos na alocação dinâmica de memória)
 
 
 --> O bug se encontra em:
      arquivo: ssl/d1_both.c,
      função: dtls1_process_heartbeat(SSL *s) (linha: 1448)
      problema: linha 1480
+     
+     função: dtls1_heartbeat(SSL *s) (linha 1518)
+     problema: linha 1561
