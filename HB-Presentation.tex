@@ -1,0 +1,91 @@
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[brazil]{babel}
+\usepackage[labelformat=empty]{caption}
+\usepackage{graphicx}
+\usepackage{color}
+
+\definecolor{covered}{gray}{0.65}
+\usetheme{Luebeck}
+\title[Heartbleed Bug: CVE-2014-0160]{Heartbleed Bug: CVE-2014-0160}
+\author{Carlos Eduardo Leão Elmadjian \and Renan Fichberg}
+\date{Novembro 11, 2014}
+\institute{Instituto de Matemática e Estatística da Universidade de São Paulo (IME-USP)}
+
+\expandafter\def\expandafter\insertshorttitle\expandafter{%
+\insertshorttitle\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conteúdo}
+	\begin{itemize}
+		\item A biblioteca OpenSSL
+		\item Heartbleed Bug: por dentro da falha
+		\item Remediando o problema
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{A biblioteca OpenSSL}
+	\begin{itemize}
+		\item O que é?
+		\item Qual é a sua importância?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{A biblioteca OpenSSL.}
+	\framesubtitle{O que é?}
+	\begin{itemize}
+		\item Implementação open-source dos protocolos SSL e TLS
+		\item Escrita em C
+		\item Permite comunicação criptografada entre máquinas
+		\item Possui \textit{wrappers} que permitem seu uso em várias linguagens
+		\item Multi-plataforma 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{A biblioteca OpenSSL}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item Qual é a sua importância?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{A biblioteca OpenSSL.}
+	\framesubtitle{Qual é a sua importância?}
+	\begin{itemize}
+		\item 2/3 de todos os servidores web utilizam OpenSSL
+		\item Facebook, Twitter, Google, Yahoo, Dropbox, Instagram...
+		\item biblioteca padrão de criptografia no Linux e BSD
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{A biblioteca OpenSSL}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item \textcolor{covered}{Qual é a sua importância?}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conteúdo}
+	\begin{itemize}
+		\item \textcolor{covered}{A biblioteca OpenSSL}
+		\item Heartbleed Bug: por dentro da falha
+		\item Remediando o problema
+	\end{itemize}
+\end{frame}
+
+\end{document}
