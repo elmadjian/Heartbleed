@@ -8,6 +8,7 @@
 \usepackage{color}
 
 \definecolor{covered}{gray}{0.65}
+\definecolor{filecolor}{rgb}{0, 0.3, 0.7}
 \usetheme{Luebeck}
 \title[Heartbleed Bug: CVE-2014-0160]{Heartbleed Bug: CVE-2014-0160}
 \author{Carlos Eduardo Leão Elmadjian \and Renan Fichberg}
@@ -28,7 +29,7 @@
 	\frametitle{Conteúdo}
 	\begin{itemize}
 		\item A biblioteca OpenSSL
-		\item Heartbleed Bug: por dentro da falha
+		\item Heartbleed Bug
 		\item Remediando o problema
 	\end{itemize}
 \end{frame}
@@ -61,13 +62,14 @@
 	\end{itemize}
 \end{frame}
 
+%TODO: Rever as informações desta frame
 \begin{frame}
 	\frametitle{A biblioteca OpenSSL.}
 	\framesubtitle{Qual é a sua importância?}
 	\begin{itemize}
 		\item 2/3 de todos os servidores web utilizam OpenSSL
 		\item Facebook, Twitter, Google, Yahoo, Dropbox, Instagram...
-		\item biblioteca padrão de criptografia no Linux e BSD
+		\item Biblioteca padrão de criptografia no Linux e BSD
 	\end{itemize}
 \end{frame}
 
@@ -83,9 +85,109 @@
 	\frametitle{Conteúdo}
 	\begin{itemize}
 		\item \textcolor{covered}{A biblioteca OpenSSL}
-		\item Heartbleed Bug: por dentro da falha
+		\item Heartbleed Bug
 		\item Remediando o problema
 	\end{itemize}
 \end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\begin{itemize}
+		\item O que é?
+		\item Por que temê-lo?
+		\item Como funciona?
+		\item Versões afetadas
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{O que é?}
+	\begin{itemize}
+		\item Encontrado em Dezembro de 2011
+		\item Uma vulnerabilidade na troca de heartbeats (RFC6520)
+		\item Afeta tanto cliente quanto servidor
+		\item Não é um problema com a criptografia
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item Por que temê-lo?
+		\item Como funciona?
+		\item Versões afetadas
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Por que temê-lo?}
+	\begin{itemize}
+		\item Permite ler 64KB da máquina atacada
+		\item Não é preciso ter acesso privilegiado
+		\item É possível roubar qualquer coisa (senhas, mensagens, certificados, endereços de e-mail...)
+		\item O roubo não deixa vestígios
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item \textcolor{covered}{Por que temê-lo?}
+		\item Como funciona?
+		\item Versões afetadas
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Como funciona?}
+	\begin{itemize}
+		\item O bug se encontra na implementação do heartbeat do OpenSSL
+		\item O heartbeat é usado para evitar a renegociação entre peers
+		\item Linha problemática:\\
+		buf = OPENSSL\_malloc(1 + 2 + payload + padding);
+		\item Permite que o usuário aloque uma quantidade arbitrária de memória para um heartbeat
+		\item A memória não é checada pelo destino e o um pacote de até 64KB é devolvido com memória coletada do servidor
+		\item Na memória lida do servidor pode haver qualquer tipo de dado sensível
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item \textcolor{covered}{Por que temê-lo?}
+		\item \textcolor{covered}{Como funciona?}
+		\item Versões afetadas
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Versões afetadas}
+	\begin{itemize}
+		\item Versões vulneráveis do OpenSSL: da 1.0.1 até 1.0.1f
+		\item São mais de 20 versões afetadas!
+		\item Tarball \textbf{\textcolor{filecolor}{openssl-1.0.1.tar.gz}} lançado em Março de 2012
+		\item Tarball \textbf{\textcolor{filecolor}{openssl-1.0.1f.tar.gz}} lançado em Janeiro de 2014
+		\item Tarball \textbf{\textcolor{filecolor}{openssl-1.0.1g.tar.gz}} lançado em Abril de 2014, sem o bug
+		\item Foram mais de 2 anos com o bug (e conseqüentemente de \textit{exploit})!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item \textcolor{covered}{Por que temê-lo?}
+		\item \textcolor{covered}{Como funciona?}
+		\item \textcolor{covered}{Versões afetadas}
+	\end{itemize}
+\end{frame}
+
 
 \end{document}

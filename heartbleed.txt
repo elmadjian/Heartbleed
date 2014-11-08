@@ -22,10 +22,13 @@ Por que eu deveria ter medo?
 - É possível roubar qualquer coisa (senhas, mensagens, certificados, endereços de e-mail...)
 - O roubo não deixa vestígios
 
+AINDA NAO INSERIDO NOS SLIDES
+/*********************************/
 Mas não basta usar um patch...
 - É preciso revogar os certificados comprometidos
 - É preciso invalidar sessões, cookies e chaves
 - Basta que apenas um dos hosts esteja vulnerável
+/************************************/
 
 Como funciona na prática
 - o bug se encontra na implementação do heartbeat do OpenSSL
