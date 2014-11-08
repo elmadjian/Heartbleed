@@ -1,0 +1,163 @@
+/*MASTER RESET*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*--------------------------------------------------*/
+/****************************************************/
+/*CSS geral e containers*/
+
+html, body {
+	min-width: 100%;
+	min-height: 100%;
+	color: #c4b6ab;
+}
+
+body {
+	background:#16151a;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	word-spacing: 0.6pt;
+	line-height: 1.6;
+	top: 0px;
+	left: 0px;
+}
+
+
+/*fontes e formatação*/
+h1 {font-size: 54px; margin:20px 20px 18px; font-weight:900; line-height:36px;}
+h2 {font-size: 36px; margin:20px 20px 18px; font-weight:100; line-height:36px;}
+h3 {font-size: 24px; margin:20px 20px 18px; font-weight:100; line-height:10px;}
+h4 {font-size: 21px; margin:0px 0px 18px; font-weight:400; line-height:10px;}
+h5 {font-size: 18px; margin:0px 0px 18px; font-weight:600;}
+h6 {font-size: 16px; margin:0px 0px 18px; font-weight:200;}
+p  {font-size: 14px; margin:0px 0px 18px; max-width:560px;}
+.tiny {font-size: 12px;	margin:0px 0px 18px; max-width:480px;}
+.legenda {margin-right:2px;	display:block;	margin-right:5px; float:left; vertical-align: text-bottom;}
+.legendataxon {vertical-align:text-bottom; font-size: 0.8em;}
+.titleText{font-weight:900; font-size:39px; text-shadow: 0px 0px 8px #428f9c;}
+b,strong {font-weight:900;}
+i,em {font-style:italic;}
+
+/*links*/
+a:link, a:visited {
+	text-decoration:none;
+	color:#428f9c;
+}
+
+a:hover{
+	color:#FFF;
+	cursor:pointer;
+	text-shadow: 0px 0px 7px #428f9c;
+	-webkit-transition: all .4s;
+	-moz-transition: all .4s;
+	-o-transition: all .4s;
+	transition: all .4s;
+}
+
+
+/*|||>>>> formulario de insercao */
+fieldset{
+	background-color: #103038;
+	padding:10px;
+	margin: 20px 20px;
+	padding:20px;
+	min-width:250px;
+	max-width:400px;
+	border-radius:5px;
+	box-shadow: 0 0 20px 1px #000;
+	position:absolute;
+}
+
+/*inputs de taxonomia de genero e especie */
+.right_field {
+	width: 150px;
+	right: 5px;
+	margin: 0 5px 5px;
+	float:right;
+	border-radius:3px;
+	color:#16151a;
+}
+.right_field:hover, #registro .special:hover{
+	box-shadow: 0 0 3px 2px #428f9c;
+}
+.right_field:focus, #registro .special:focus{
+	box-shadow: 2px 2px 4px #777 inset, 0 0 9px #c4b6ab;
+	background-color: #FFFFEB;
+}
+.special {
+	width: 200px;
+	height: 35px;
+	float:left;
+	border-radius:3px;
+	margin-left:10px;;
+	color:#16151a;
+	font-size:19px;
+}
+.legenda {
+	font-size:14px;
+	line-height:20px;
+	padding: 7px 0 10px;
+	float:right;
+}
+.legenda_special {
+	font-size: 22px;
+	font-weight:100;
+	margin-left:10px;
+
+}
+.column {
+	display:inline-block;
+	vertical-align:middle;
+	margin: 10px 15px 10px 15px;
+	padding:5px;
+	min-width: 260px;
+	max-width: 350px;
+}
+.botao {
+	float: right;
+}
+.imagem {
+	margin: 20px 20px;
+	border-radius:3px;
+	box-shadow: 0 0 3px 2px #428f9c;
+
+}
