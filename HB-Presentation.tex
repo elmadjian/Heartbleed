@@ -132,7 +132,7 @@
 	\frametitle{Heartbleed Bug}
 	\framesubtitle{Por que temê-lo?}
 	\begin{itemize}
-		\item Permite ler 64KB da máquina atacada
+		\item Permite ler 64KB da máquina atacada por heartbeat
 		\item Não é preciso ter acesso privilegiado
 		\item É possível roubar qualquer coisa (senhas, mensagens, certificados, endereços de e-mail...)
 		\item O roubo não deixa vestígios
@@ -156,7 +156,14 @@
 		\item O bug se encontra na implementação do heartbeat do OpenSSL
 		\item O heartbeat é usado para evitar a renegociação entre peers
 		\item Linha problemática:\\
-		buf = OPENSSL\_malloc(1 + 2 + payload + padding);
+		\hspace{5 mm}buf = OPENSSL\_malloc(1 + 2 + payload + padding);
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Como funciona?}
+	\begin{itemize}
 		\item Permite que o usuário aloque uma quantidade arbitrária de memória para um heartbeat
 		\item A memória não é checada pelo destino e o um pacote de até 64KB é devolvido com memória coletada do servidor
 		\item Na memória lida do servidor pode haver qualquer tipo de dado sensível
@@ -209,7 +216,7 @@
 	\frametitle{Remediando o problema}
 	\begin{itemize}
 		\item Opção 1: compilar com a tag:\\ \hspace{5 mm}-DOPENSSL\_NO\_HEARTBEATS
-		\item Opção 2: usar a partir da versão \textbf{1.0.1g}
+		\item Opção 2: usar a biblioteca OpenSSL a partir da versão \textbf{1.0.1g}
 	\end{itemize}
 \end{frame}
 
