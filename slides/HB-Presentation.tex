@@ -1,0 +1,307 @@
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[brazil]{babel}
+\usepackage[labelformat=empty]{caption}
+\usepackage{graphicx}
+\usepackage{color}
+
+\definecolor{beamer@blendedblue}{rgb}{0.8, 0, 0}
+\definecolor{covered}{gray}{0.65}
+\definecolor{filecolor}{rgb}{0, 0.3, 0.7}
+\usetheme{Luebeck}
+\title[Heartbleed Bug: CVE-2014-0160]{Heartbleed Bug: CVE-2014-0160}
+\author{Carlos Eduardo Leão Elmadjian \and Renan Fichberg}
+\date{11 de novembro de 2014}
+\institute{Instituto de Matemática e Estatística da Universidade de São Paulo (IME-USP)}
+
+\expandafter\def\expandafter\insertshorttitle\expandafter{%
+\insertshorttitle\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	\includegraphics[scale=0.4]{heartbleed.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conteúdo}
+	\begin{itemize}
+		\item A biblioteca OpenSSL
+		\item Heartbleed Bug
+		\item Remediando o problema
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{A biblioteca OpenSSL}
+	\begin{itemize}
+		\item O que é?
+		\item Qual a sua importância?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{A biblioteca OpenSSL}
+	\framesubtitle{O que é?}
+	\begin{itemize}
+		\item Implementação \textit{open-source} dos protocolos SSL e TLS
+		\item Escrita em C
+		\item Permite comunicação criptografada entre máquinas
+		\item Possui \textit{wrappers} que permitem seu uso em várias linguagens
+		\item Multiplataforma 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{A biblioteca OpenSSL}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item Qual a sua importância?
+	\end{itemize}
+\end{frame}
+
+%TODO: Rever as informações desta frame
+\begin{frame}
+	\frametitle{A biblioteca OpenSSL.}
+	\framesubtitle{Qual é a sua importância?}
+	\begin{itemize}
+		\item Cerca de 2/3 dos servidores web utilizam OpenSSL
+		\item Facebook, Twitter, Google, Yahoo, Dropbox, Instagram...
+		\item Biblioteca padrão de criptografia no Linux e BSD
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{A biblioteca OpenSSL}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item \textcolor{covered}{Qual é a sua importância?}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conteúdo}
+	\begin{itemize}
+		\item \textcolor{covered}{A biblioteca OpenSSL}
+		\item Heartbleed Bug
+		\item Remediando o problema
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\begin{itemize}
+		\item O que é?
+		\item Por que temê-lo?
+		\item Como funciona?
+		\item Versões afetadas
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{O que é?}
+	\begin{itemize}
+		\item O nome se deve a uma falha na extensão de heartbeat (RFC6520)
+		\item O heartbeat é usado para evitar renegociação segura (SSL/TLS) entre as partes, o que é custoso
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{O que é?}
+	\begin{itemize}
+		\item Inserido em 31 de dezembro de 2011
+		\item Afeta tanto cliente quanto servidor
+		\item Não é um problema com a criptografia
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item Por que temê-lo?
+		\item Como funciona?
+		\item Versões afetadas
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Por que temê-lo?}
+	\begin{itemize}
+		\item Permite ler 64KB da máquina atacada (por heartbeat)
+		\item Não é preciso ter acesso privilegiado
+		\item É possível roubar qualquer coisa (senhas, mensagens, certificados x.509, endereços de e-mail...)
+		\item O roubo não deixa vestígios (heartbeat não produz log)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item \textcolor{covered}{Por que temê-lo?}
+		\item Como funciona?
+		\item Versões afetadas
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Como funciona?}
+	\begin{itemize}
+		\item O bug se encontra na extensão de heartbeat do OpenSSL, no arquivo \textbf{ssl/d1\_both.c}:\\
+		\includegraphics[scale=0.48]{03_HB1.png}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Como funciona?}
+	\begin{itemize}
+		\item A estrutura lida está definida no header \textbf{ssl/ssl3.h}:\\
+		\includegraphics[scale=0.42]{01_SSL3_RECORD.png}\\\vspace{0.1cm}
+		\includegraphics[scale=0.514]{02_rrec.png}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Como funciona?}
+	\begin{itemize}
+		\item Permite que o usuário aloque uma quantidade arbitrária de memória para um heartbeat
+		\item A memória não é checada pelo destino e o um pacote de até 64KB é devolvido com memória coletada do servidor
+		\item Na memória lida do servidor pode haver qualquer tipo de dado sensível
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Como funciona?}
+	\begin{itemize}
+		\item Como o tamanho não é checado, o problema se manifesta neste trecho de \textbf{ssl/d1\_both.c}:\\
+		\includegraphics[scale=0.41]{04_HB2.png}\\
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item \textcolor{covered}{Por que temê-lo?}
+		\item \textcolor{covered}{Como funciona?}
+		\item Versões afetadas
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Versões afetadas}
+	\begin{itemize}
+		\item Versões vulneráveis do OpenSSL: da 1.0.1 a 1.0.1f e algumas versões beta
+		\item Ao todo, são mais de 20 versões afetadas
+		\item Primeira: \textbf{\textcolor{filecolor}{openssl-1.0.1.tar.gz}}, lançada em março de 2012
+		\item Última: \textbf{\textcolor{filecolor}{openssl-1.0.1f.tar.gz}}, lançada em janeiro de 2014
+		\item Correta: \textbf{\textcolor{filecolor}{openssl-1.0.1g.tar.gz}}, lançada em abril de 2014
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\framesubtitle{Versões afetadas}
+	\begin{itemize}
+		\item Foram mais de 2 anos com o bug -- e não conhecemos o tamanho do estrago...\\
+		\includegraphics[scale=0.4]{yahoo.jpeg}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heartbleed Bug}
+	\begin{itemize}
+		\item \textcolor{covered}{O que é?}
+		\item \textcolor{covered}{Por que temê-lo?}
+		\item \textcolor{covered}{Como funciona?}
+		\item \textcolor{covered}{Versões afetadas}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conteúdo}
+	\begin{itemize}
+		\item \textcolor{covered}{A biblioteca OpenSSL}
+		\item \textcolor{covered}{Heartbleed Bug}
+		\item Remediando o problema
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Remediando o problema}
+	\begin{itemize}
+		\item Opção 1: compilar com a tag:\\ \hspace{5 mm}-DOPENSSL\_NO\_HEARTBEATS
+		\item Vantagem: não é preciso atualizar a biblioteca
+		\item Desvantagem: heartbeat fica desativado permanentemente
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Remediando o problema}
+	\begin{itemize}
+		\item Opção 2: usar a biblioteca OpenSSL a partir da versão \textbf{1.0.1g}, que vem com a correção abaixo: \\
+		\includegraphics[scale=0.45]{05_correcao.png}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Remediando o problema}
+		\begin{itemize}
+			\item Mas isso não é o bastante. É preciso ainda...
+			\begin{itemize}
+				\item revogar todos os certificados
+				\item invalidar cookies, sessões e chaves
+				\item pedir para os usuários se recadastrarem, aceitando agora os novos certificados 
+			\end{itemize}
+			
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conteúdo}
+	\begin{itemize}
+		\item \textcolor{covered}{A biblioteca OpenSSL}
+		\item \textcolor{covered}{Heartbleed Bug}
+		\item \textcolor{covered}{Remediando o problema}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	\includegraphics[scale=0.4]{heartcured.png}
+	\begin{center} 
+		Obrigado! :)
+	\end{center}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Referências}
+	\begin{itemize}
+		\item \textit{http://heartbleed.com/}
+		\item \textit{http://edition.cnn.com/2014/04/08/tech/web/heartbleed-openssl/}
+		\item \textit{http://www.codenomicon.com/news/news/2014-05-20.shtml}
+		\item \textit{http://theregister.co.uk/2014/04/09/heartbleed\_explained}
+		\item \textit{http://blog.existentialize.com/diagnosis-of-the-openssl-heartbleed-bug.html}
+	\end{itemize}
+\end{frame}
+
+\end{document}
